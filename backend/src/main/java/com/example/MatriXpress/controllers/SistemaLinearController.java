@@ -6,13 +6,11 @@ import com.example.MatriXpress.dto.SolucaoResponseDTO;
 import com.example.MatriXpress.models.ResolvedorGaussiano;
 import com.example.MatriXpress.models.SistemaLinear;
 import com.example.MatriXpress.models.Solucao;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin (origins = "http://localhost:5173/")
 public class SistemaLinearController {
 
     private final ResolvedorGaussiano resolvedor = new ResolvedorGaussiano();
