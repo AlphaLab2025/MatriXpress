@@ -1,0 +1,24 @@
+package com.example.MatriXpress.controllers;
+
+
+import com.example.MatriXpress.dto.SistemaRequestDTO;
+import com.example.MatriXpress.dto.SolucaoResponseDTO;
+import com.example.MatriXpress.models.ResolvedorGaussiano;
+import com.example.MatriXpress.models.SistemaLinear;
+import com.example.MatriXpress.models.Solucao;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api")
+@CrossOrigin (origins = "http://localhost:5173/")
+public class SistemaLinearController {
+
+    private final ResolvedorGaussiano resolvedor = new ResolvedorGaussiano();
+
+    @PostMapping("/resolver")
+    public SolucaoResponseDTO resolverSistema(@RequestBody SistemaRequestDTO request) {
+        SistemaLinear sistema = new SistemaLinear(request.getCoeficientes(), request.getConstantes());
+        Solucao solucao = resolvedor.resolver(sistema);
+        return new SolucaoResponseDTO(solucao);
+    }
+}
