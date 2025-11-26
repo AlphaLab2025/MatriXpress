@@ -1,15 +1,19 @@
 package com.example.MatriXpress.models;
 
+import java.util.List;
+
 import com.example.MatriXpress.enumeration.TipoSolucao;
 
 public class Solucao {
 
     private final TipoSolucao tipoSolucao;
     private final double[] valores;
+    private final List<String> passos; 
 
-    public Solucao(TipoSolucao tipoSolucao, double[] valores) {
+    public Solucao(TipoSolucao tipoSolucao, double[] valores, List<String> passos) {
         this.tipoSolucao = tipoSolucao;
         this.valores = valores;
+        this.passos = passos; 
     }
 
     public TipoSolucao getTipoSolucao() {
@@ -18,6 +22,10 @@ public class Solucao {
 
     public double[] getValores() {
         return valores;
+    }
+
+    public List<String> getPassos() {
+        return passos; 
     }
 
   @Override

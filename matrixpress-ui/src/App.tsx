@@ -1,25 +1,32 @@
 import { useState, useEffect } from 'react';
 import { solveLinearSystem } from './services/apiService';
+import type { SolucaoResponse } from './types/api';
 import SizeSelector from './components/SizeSelector';
 import MatrixGrid from './components/MatrixGrid';
 import ResultDisplay from './components/ResultDisplay';
 import './App.css'; 
 
 function App() {
+  
   const [size, setSize] = useState<number>(3);
+  
   const [matrix, setMatrix] = useState<string[][]>([]);
-  const [solution, setSolution] = useState<string | null>(null);
+  
+  const [resultData, setResultData] = useState<SolucaoResponse | null>(null);
+  
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+
   useEffect(() => {
     const newMatrix = Array.from({ length: size }, () =>
-      Array.from({ length: size + 1 }, () => '')
+      Array.from({ length: size + 1 }, () => '') 
     );
     setMatrix(newMatrix);
-    setSolution(null);
-    setError(null);
+    setResultData(null); 
+    setError(null);      
   }, [size]);
+
 
   const handleInputChange = (value: string, row: number, col: number) => {
     const newMatrix = matrix.map((r, i) =>
@@ -30,7 +37,7 @@ function App() {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    setSolution(null);
+    setResultData(null);
     setError(null);
 
     const coeficientes = matrix.map(row =>
@@ -40,12 +47,13 @@ function App() {
 
     try {
       const data = await solveLinearSystem({ coeficientes, constantes });
-      setSolution(data.mensagem);
+      
+      setResultData(data);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('Ocorreu um erro desconhecido.');
+        setError('Ocorreu um erro desconhecido ao conectar com o servidor.');
       }
     } finally {
       setIsLoading(false);
@@ -60,14 +68,26 @@ function App() {
       <SizeSelector size={size} onSizeChange={setSize} />
       
       <div className="matrix-container">
-        <MatrixGrid size={size} matrix={matrix} onInputChange={handleInputChange} />
+        <MatrixGrid 
+          size={size} 
+          matrix={matrix} 
+          onInputChange={handleInputChange} 
+        />
       </div>
       
-      <button onClick={handleSubmit} disabled={isLoading} className="solve-button">
+      <button 
+        onClick={handleSubmit} 
+        disabled={isLoading} 
+        className="solve-button"
+      >
         {isLoading ? 'Calculando...' : 'Resolver Sistema'}
       </button>
 
-      <ResultDisplay solution={solution} error={error} isLoading={isLoading} />
+      <ResultDisplay 
+        resultData={resultData} 
+        error={error} 
+        isLoading={isLoading} 
+      />
     </div>
   );
 }
