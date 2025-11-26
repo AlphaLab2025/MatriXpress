@@ -63,16 +63,7 @@ O backend deve ser iniciado primeiro, pois o frontend tentará se conectar a ele
     npm start  # ou yarn start
     ```
 
-O frontend será aberto automaticamente no seu navegador, geralmente em **`http://localhost:3000`**.
-
----
-
-## ⚙️ Configuração de Comunicação
-
-Verifique se o seu aplicativo React está configurado para fazer requisições HTTP para o endereço correto da API:
-
-* **URL da API:** A URL base para as chamadas do React deve ser configurada para **`http://localhost:8080`**.
-    * *Dica:* Se você estiver usando um proxy no `package.json` do React, garanta que ele aponte para `http://localhost:8080`.
+O frontend será aberto automaticamente no seu navegador, !na porta **`http://localhost:5173`**.
 
 ---
 
